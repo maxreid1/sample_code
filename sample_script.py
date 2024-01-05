@@ -1,15 +1,28 @@
 import requests, json
 
-def fetchData(url):
-  while True:  
+def fetch_data(url):
+    ""Fetch and return data from a given URL.
+    
+    Args:
+        url (str): The URL to fetch data from.
+        
+    Returns:
+        dict or None: The data fetched from the URL as a dictionary if the request is successful; None otherwise.
+    ""
     try:
-      r=requests.get(url)
-      if r.status_code==200:
-          data=r.json()
-          return data
-      else: print('Error:', r.status_code)
-    except Exception as e: print(e)
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f'Error fetching data: HTTP {response.status_code } - {response.reason}')
+            return None
+    except Exception as e:
+        print(f'An error occurred: {e}')
+        return None
 
-url='https://api.example.com/data'
-data=fetchData(url)
-if data!=None: print(data)
+.url = 'https://api.example.com/data'
+
+# Fetch and print data
+data = fetch_data(url)
+if data:
+    print(data)
